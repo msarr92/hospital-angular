@@ -1,0 +1,58 @@
+<section id="testimonials" class="testimonials-section">
+  <div class="container" @testimonialAnimation>
+    <div class="section-header">
+      <h2>Ils nous ont fait confiance</h2>
+      <p>Découvrez les expériences de nos patients</p>
+    </div>
+    
+    <div class="testimonials-container">
+      <div class="testimonials-grid">
+        @for (testimonial of testimonials; track testimonial; let i = $index) {
+          <div class="testimonial-card" [class.active]="i === currentTestimonial">
+            <div class="testimonial-header">
+              <div class="avatar">
+                <div class="avatar-placeholder">{{ testimonial.name.charAt(0) }}</div>
+              </div>
+              <div class="testimonial-info">
+                <h3>{{ testimonial.name }}</h3>
+                <p>{{ testimonial.role }}</p>
+                <div class="rating">
+                  @for (star of getStars(testimonial.rating); track star) {
+                    <i class="fas fa-star"></i>
+                  }
+                </div>
+              </div>
+            </div>
+            
+            <div class="testimonial-content" @quoteAnimation>
+              <i class="fas fa-quote-left quote-icon"></i>
+              <p>{{ testimonial.text }}</p>
+              <div class="testimonial-date">
+                <i class="fas fa-calendar-alt"></i>
+                {{ testimonial.date }}
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+      
+      <div class="testimonials-controls">
+        <button class="control-btn" (click)="prevTestimonial()">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+        <div class="testimonial-dots">
+          @for (testimonial of testimonials; track testimonial; let i = $index) {
+            <button 
+              class="dot" 
+              [class.active]="i === currentTestimonial"
+              (click)="currentTestimonial = i">
+            </button>
+          }
+        </div>
+        <button class="control-btn" (click)="nextTestimonial()">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>

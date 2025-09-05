@@ -1,0 +1,29 @@
+<section id="services" class="services-section">
+  <div class="container" @serviceAnimation>
+    <div class="section-header">
+      <h2>Nos Services Médicaux</h2>
+      <p>Des soins complets et de qualité dans un environnement médical de pointe</p>
+    </div>
+    
+    <div class="services-grid">
+      <div 
+        class="service-card" 
+        *ngFor="let service of services; let i = index"
+        (mouseenter)="onCardHover(i)"
+        (mouseleave)="onCardLeave()"
+        [class.hovered]="hoveredCard === i">
+        <div class="service-icon" @iconAnimation>
+          <i [class]="service.icon"></i>
+        </div>
+        <h3>{{ service.title }}</h3>
+        <p>{{ service.description }}</p>
+        <ul class="service-features">
+          <li *ngFor="let feature of service.features">
+            <i class="fas fa-check-circle"></i> {{ feature }}
+          </li>
+        </ul>
+        <button class="service-btn">En savoir plus</button>
+      </div>
+    </div>
+  </div>
+</section>

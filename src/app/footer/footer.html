@@ -1,0 +1,48 @@
+<footer class="footer" @footerAnimation>
+  <div class="footer-content">
+    <div class="footer-section">
+      <div class="footer-logo">
+        <i class="fas fa-hospital"></i>
+        <span>Hôpital Excellence</span>
+      </div>
+      <p>Votre santé est notre priorité. Nous offrons des soins médicaux de qualité avec compassion et expertise.</p>
+      <div class="social-links">
+        <a *ngFor="let social of socialLinks" [href]="social.link" class="social-link">
+          <i [class]="social.icon"></i>
+        </a>
+      </div>
+    </div>
+    
+    <div class="footer-section">
+      <h3>Liens Rapides</h3>
+      <ul>
+        <li *ngFor="let link of quickLinks">
+          <a [href]="link.link">{{ link.name }}</a>
+        </li>
+      </ul>
+    </div>
+    
+    <div class="footer-section">
+      <h3>Nos Services</h3>
+      <ul>
+        <li *ngFor="let service of services">
+          <a [href]="service.link">{{ service.name }}</a>
+        </li>
+      </ul>
+    </div>
+    
+    <div class="footer-section">
+      <h3>Contactez-nous</h3>
+      <div class="contact-info">
+        <p><i class="fas fa-map-marker-alt"></i> 123 Avenue de la Santé, 75000 Paris</p>
+        <p><i class="fas fa-phone"></i> 01 23 45 67 89</p>
+        <p><i class="fas fa-envelope"></i> contact@hopital-excellence.fr</p>
+        <p><i class="fas fa-clock"></i> Lun-Ven: 8h-20h | Urgences: 24h/24</p>
+      </div>
+    </div>
+  </div>
+  
+  <div class="footer-bottom">
+    <p>&copy; {{ currentYear }} Hôpital Excellence Médicale. Tous droits réservés.</p>
+  </div>
+</footer>

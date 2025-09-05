@@ -1,0 +1,116 @@
+<section id="contact" class="contact-section">
+  <div class="container">
+    <div class="section-header">
+      <h2>Contactez-nous</h2>
+      <p>Notre équipe est à votre écoute pour répondre à toutes vos questions</p>
+    </div>
+    
+    <div class="contact-content">
+      <div class="contact-info" @infoAnimation>
+        <div class="info-item">
+          <div class="info-icon">
+            <i class="fas fa-map-marker-alt"></i>
+          </div>
+          <div class="info-details">
+            <h4>Adresse</h4>
+            <p>123 Avenue de la Santé<br>75000 Paris</p>
+          </div>
+        </div>
+        
+        <div class="info-item">
+          <div class="info-icon">
+            <i class="fas fa-phone"></i>
+          </div>
+          <div class="info-details">
+            <h4>Téléphone</h4>
+            <p>01 23 45 67 89<br>Urgences: 01 23 45 67 00</p>
+          </div>
+        </div>
+        
+        <div class="info-item">
+          <div class="info-icon">
+            <i class="fas fa-envelope"></i>
+          </div>
+          <div class="info-details">
+            <h4>Email</h4>
+            <p>contact@hopital-excellence.fr<br>urgence@hopital-excellence.fr</p>
+          </div>
+        </div>
+        
+        <div class="info-item">
+          <div class="info-icon">
+            <i class="fas fa-clock"></i>
+          </div>
+          <div class="info-details">
+            <h4>Horaires</h4>
+            <p>Lun-Ven: 8h-20h<br>Sam: 9h-18h<br>Urgences: 24h/24</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="contact-form" @formAnimation>
+        <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name">Nom complet</label>
+              <input 
+                type="text" 
+                id="name" 
+                formControlName="name"
+                [class.error]="submitted && contactForm.get('name')?.errors">
+              <div class="error-message" *ngIf="submitted && contactForm.get('name')?.errors">
+                Le nom est requis
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input 
+                type="email" 
+                id="email" 
+                formControlName="email"
+                [class.error]="submitted && contactForm.get('email')?.errors">
+              <div class="error-message" *ngIf="submitted && contactForm.get('email')?.errors">
+                Email invalide
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="phone">Téléphone (optionnel)</label>
+            <input type="tel" id="phone" formControlName="phone">
+          </div>
+          
+          <div class="form-group">
+            <label for="subject">Sujet</label>
+            <select id="subject" formControlName="subject"
+                    [class.error]="submitted && contactForm.get('subject')?.errors">
+              <option value="">Sélectionnez un sujet</option>
+              <option value="rdv">Prise de rendez-vous</option>
+              <option value="info">Demande d'information</option>
+              <option value="urgence">Urgence médicale</option>
+              <option value="autre">Autre</option>
+            </select>
+            <div class="error-message" *ngIf="submitted && contactForm.get('subject')?.errors">
+              Veuillez sélectionner un sujet
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea 
+              id="message" 
+              rows="5" 
+              formControlName="message"
+              [class.error]="submitted && contactForm.get('message')?.errors"></textarea>
+            <div class="error-message" *ngIf="submitted && contactForm.get('message')?.errors">
+              Le message est requis
+            </div>
+          </div>
+          
+          <button type="submit" class="submit-btn">Envoyer le message</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,52 @@
+<section id="about" class="about-section">
+  <div class="container">
+    <div class="about-content">
+      <div class="about-text">
+        <h2>Notre Engagement pour Votre Santé</h2>
+        <p>Fondé en 1985, l'Hôpital Excellence Médicale n'a cessé d'évoluer pour offrir les meilleurs soins à nos patients. Notre établissement combine expertise médicale, technologie de pointe et approche humaine.</p>
+        
+        <div class="about-features">
+          <div class="feature">
+            <i class="fas fa-award"></i>
+            <h4>Certification Qualité</h4>
+            <p>Certifié selon les normes internationales de qualité des soins</p>
+          </div>
+          <div class="feature">
+            <i class="fas fa-users"></i>
+            <h4>Équipe Expérimentée</h4>
+            <p>150 médecins et 300 personnels soignants dévoués</p>
+          </div>
+          <div class="feature">
+            <i class="fas fa-flask"></i>
+            <h4>Recherche Médicale</h4>
+            <p>Centre de recherche intégré pour des traitements innovants</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="about-image">
+        <div class="image-placeholder"></div>
+      </div>
+    </div>
+    
+    <div class="stats-section" @counterAnimation>
+      <div class="counter-item" *ngFor="let stat of stats">
+        <h3>{{ stat.value }}{{ stat.suffix }}</h3>
+        <p>{{ stat.label }}</p>
+      </div>
+    </div>
+    
+    <div class="skills-section" @progressAnimation>
+      <h3>Notre Expertise Médicale</h3>
+      <div class="skill" *ngFor="let skill of skills">
+        <div class="skill-info">
+          <span>{{ skill.name }}</span>
+          <span>{{ skill.percentage }}%</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress" [style.width.%]="skill.percentage"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

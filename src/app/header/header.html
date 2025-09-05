@@ -1,0 +1,38 @@
+<header @fadeInDown>
+  <nav class="navbar">
+    <div class="nav-brand">
+        <div class="hospital-logo"  routerLink="/home">
+          <i class="fas fa-hospital"></i>
+          <span>Hôpital Excellence</span>
+        </div>
+      </div>
+    
+    <div class="nav-menu" [class.active]="isMenuOpen">
+      <a routerLink="/home" class="nav-link">Accueil</a>
+      <a href="#about" class="nav-link">À propos</a>
+      <a href="#services" class="nav-link">Services</a>
+      <a href="#contact" class="nav-link">Contact</a>
+    </div>
+    
+     <div class="nav-actions" @slideInRight>
+      <button  class="btn-login" (click)="openLogin()">
+        <i class="fas fa-user"></i>
+        Connexion
+      </button>
+    </div>
+    
+    <div class="hamburger" [class.active]="isMenuOpen" (click)="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </nav>
+
+  <!-- Menu mobile avec bouton connexion -->
+  <div class="nav-actions-mobile" [class.active]="isMenuOpen">
+    <button  class="btn-login-mobile" (click)="openLogin() ">
+      <i class="fas fa-user"></i>
+      Connexion
+    </button>
+  </div>
+</header>
