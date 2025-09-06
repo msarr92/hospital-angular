@@ -3,6 +3,7 @@ import { App } from './app';
 import { Login } from './login/login';
 import { Home } from './home/home';
 import { Register } from './register/register';
+import { Dashboard } from './dashboard/dashboard';
 
 
 export const routes: Routes = [
@@ -10,6 +11,7 @@ export const routes: Routes = [
     { path: 'login', component: Login },
     { path: 'register', component: Register },
     { path: 'home', component: Home },
+    { path: 'dashboard', component: Dashboard },
     // Redirection pour les routes inconnues
   { 
     path: '**', 

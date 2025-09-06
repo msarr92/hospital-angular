@@ -1,0 +1,333 @@
+<div class="dashboard-page">
+  <!-- Header avec navigation -->
+  <header class="dashboard-header">
+    <nav class="navbar">
+      <div class="nav-brand">
+        <div class="hospital-logo" (click)="navigateToHome()">
+          <i class="fas fa-hospital"></i>
+          <span>Hôpital Excellence</span>
+        </div>
+      </div>
+      
+      <div class="nav-user">
+        <div class="user-info">
+          <div class="user-avatar">
+            <i class="fas fa-user"></i>
+          </div>
+          <div class="user-details">
+            <span class="user-name">{{ currentUser?.name }}</span>
+            <span class="user-role">{{ currentUser?.role }}</span>
+          </div>
+        </div>
+        <button class="btn-logout" (click)="logout()">
+          <i class="fas fa-sign-out-alt"></i>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main class="dashboard-main">
+    <!-- Sidebar Navigation -->
+    <aside class="dashboard-sidebar">
+      <nav class="sidebar-nav">
+        <div class="sidebar-header">
+          <h3>Navigation</h3>
+        </div>
+        
+        <ul class="sidebar-menu">
+          <!-- Menu commun à tous les utilisateurs -->
+          <li class="menu-item" [class.active]="activeTab === 'dashboard'">
+            <a (click)="setActiveTab('dashboard')">
+              <i class="fas fa-tachometer-alt"></i>
+              <span>Tableau de bord</span>
+            </a>
+          </li>
+
+          <!-- Menu Admin -->
+          @if (currentUser?.role === 'admin') {
+            <li class="menu-item" [class.active]="activeTab === 'users'">
+              <a (click)="setActiveTab('users')">
+                <i class="fas fa-users"></i>
+                <span>Gestion des utilisateurs</span>
+              </a>
+            </li>
+            <li class="menu-item" [class.active]="activeTab === 'reports'">
+              <a (click)="setActiveTab('reports')">
+                <i class="fas fa-chart-bar"></i>
+                <span>Rapports & Statistiques</span>
+              </a>
+            </li>
+            <li class="menu-item" [class.active]="activeTab === 'settings'">
+              <a (click)="setActiveTab('settings')">
+                <i class="fas fa-cog"></i>
+                <span>Paramètres système</span>
+              </a>
+            </li>
+          }
+
+          <!-- Menu Médecin -->
+          @if (currentUser?.role === 'doctor') {
+            <li class="menu-item" [class.active]="activeTab === 'appointments'">
+              <a (click)="setActiveTab('appointments')">
+                <i class="fas fa-calendar-check"></i>
+                <span>Mes rendez-vous</span>
+              </a>
+            </li>
+            <li class="menu-item" [class.active]="activeTab === 'patients'">
+              <a (click)="setActiveTab('patients')">
+                <i class="fas fa-user-injured"></i>
+                <span>Mes patients</span>
+              </a>
+            </li>
+            <li class="menu-item" [class.active]="activeTab === 'schedule'">
+              <a (click)="setActiveTab('schedule')">
+                <i class="fas fa-clock"></i>
+                <span>Emploi du temps</span>
+              </a>
+            </li>
+          }
+
+          <!-- Menu Patient -->
+          @if (currentUser?.role === 'patient') {
+            <li class="menu-item" [class.active]="activeTab === 'my-appointments'">
+              <a (click)="setActiveTab('my-appointments')">
+                <i class="fas fa-calendar"></i>
+                <span>Mes rendez-vous</span>
+              </a>
+            </li>
+            <li class="menu-item" [class.active]="activeTab === 'medical-records'">
+              <a (click)="setActiveTab('medical-records')">
+                <i class="fas fa-file-medical"></i>
+                <span>Dossiers médicaux</span>
+              </a>
+            </li>
+            <li class="menu-item" [class.active]="activeTab === 'prescriptions'">
+              <a (click)="setActiveTab('prescriptions')">
+                <i class="fas fa-prescription"></i>
+                <span>Ordonnances</span>
+              </a>
+            </li>
+          }
+
+          <!-- Menu commun -->
+          <li class="menu-item" [class.active]="activeTab === 'profile'">
+            <a (click)="setActiveTab('profile')">
+              <i class="fas fa-user-circle"></i>
+              <span>Mon profil</span>
+            </a>
+          </li>
+          <li class="menu-item" [class.active]="activeTab === 'messages'">
+            <a (click)="setActiveTab('messages')">
+              <i class="fas fa-envelope"></i>
+              <span>Messages</span>
+              <span class="badge">3</span>
+            </a>
+          </li>
+          <li class="menu-item" [class.active]="activeTab === 'help'">
+            <a (click)="setActiveTab('help')">
+              <i class="fas fa-question-circle"></i>
+              <span>Aide & Support</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Content Area -->
+    <div class="dashboard-content">
+      <!-- Header du contenu -->
+      <div class="content-header">
+        <h1>{{ getPageTitle() }}</h1>
+        <div class="header-actions">
+          <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" placeholder="Rechercher...">
+          </div>
+          <button class="btn-notifications">
+            <i class="fas fa-bell"></i>
+            <span class="badge">5</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Contenu dynamique en fonction de l'onglet actif -->
+      <div class="content-area">
+        <!-- Tableau de bord principal -->
+        @if (activeTab === 'dashboard') {
+          <div class="dashboard-welcome">
+            <div class="welcome-card">
+              <h2>Bienvenue, {{ currentUser?.name }}!</h2>
+              <p>Nous sommes ravis de vous revoir. Voici un aperçu de vos activités récentes.</p>
+              
+              <div class="stats-grid">
+                @if (currentUser?.role === 'admin') {
+                  <div class="stat-card">
+                    <div class="stat-icon admin">
+                      <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-info">
+                      <h3>1,248</h3>
+                      <p>Utilisateurs totaux</p>
+                    </div>
+                  </div>
+                  <div class="stat-card">
+                    <div class="stat-icon doctor">
+                      <i class="fas fa-user-md"></i>
+                    </div>
+                    <div class="stat-info">
+                      <h3>45</h3>
+                      <p>Médecins</p>
+                    </div>
+                  </div>
+                  <div class="stat-card">
+                    <div class="stat-icon patient">
+                      <i class="fas fa-user-injured"></i>
+                    </div>
+                    <div class="stat-info">
+                      <h3>1,203</h3>
+                      <p>Patients</p>
+                    </div>
+                  </div>
+                  <div class="stat-card">
+                    <div class="stat-icon appointment">
+                      <i class="fas fa-calendar"></i>
+                    </div>
+                    <div class="stat-info">
+                      <h3>324</h3>
+                      <p>RDV aujourd'hui</p>
+                    </div>
+                  </div>
+                }
+
+                @if (currentUser?.role === 'doctor') {
+                  <div class="stat-card">
+                    <div class="stat-icon appointment">
+                      <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <div class="stat-info">
+                      <h3>12</h3>
+                      <p>RDV aujourd'hui</p>
+                    </div>
+                  </div>
+                  <div class="stat-card">
+                    <div class="stat-icon patient">
+                      <i class="fas fa-user-injured"></i>
+                    </div>
+                    <div class="stat-info">
+                      <h3>156</h3>
+                      <p>Patients suivis</p>
+                    </div>
+                  </div>
+                  <div class="stat-card">
+                    <div class="stat-icon time">
+                      <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-info">
+                      <h3>4h30</h3>
+                      <p>Temps de consultation</p>
+                    </div>
+                  </div>
+                  <div class="stat-card">
+                    <div class="stat-icon rating">
+                      <i class="fas fa-star"></i>
+                    </div>
+                    <div class="stat-info">
+                      <h3>4.8/5</h3>
+                      <p>Note moyenne</p>
+                    </div>
+                  </div>
+                }
+
+                @if (currentUser?.role === 'patient') {
+                  <div class="stat-card">
+                    <div class="stat-icon appointment">
+                      <i class="fas fa-calendar"></i>
+                    </div>
+                    <div class="stat-info">
+                      <h3>2</h3>
+                      <p>RDV à venir</p>
+                    </div>
+                  </div>
+                  <div class="stat-card">
+                    <div class="stat-icon prescription">
+                      <i class="fas fa-prescription"></i>
+                    </div>
+                    <div class="stat-info">
+                      <h3>5</h3>
+                      <p>Ordonnances actives</p>
+                    </div>
+                  </div>
+                  <div class="stat-card">
+                    <div class="stat-icon record">
+                      <i class="fas fa-file-medical"></i>
+                    </div>
+                    <div class="stat-info">
+                      <h3>24</h3>
+                      <p>Documents médicaux</p>
+                    </div>
+                  </div>
+                  <div class="stat-card">
+                    <div class="stat-icon message">
+                      <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="stat-info">
+                      <h3>3</h3>
+                      <p>Messages non lus</p>
+                    </div>
+                  </div>
+                }
+              </div>
+            </div>
+
+            <div class="recent-activity">
+              <h3>Activité récente</h3>
+              <div class="activity-list">
+                <div class="activity-item">
+                  <div class="activity-icon">
+                    <i class="fas fa-calendar-plus"></i>
+                  </div>
+                  <div class="activity-content">
+                    <p>Nouveau rendez-vous programmé</p>
+                    <span class="activity-time">Il y a 2 heures</span>
+                  </div>
+                </div>
+                <div class="activity-item">
+                  <div class="activity-icon">
+                    <i class="fas fa-file-medical"></i>
+                  </div>
+                  <div class="activity-content">
+                    <p>Résultats d'analyse disponibles</p>
+                    <span class="activity-time">Hier à 14:30</span>
+                  </div>
+                </div>
+                <div class="activity-item">
+                  <div class="activity-icon">
+                    <i class="fas fa-prescription"></i>
+                  </div>
+                  <div class="activity-content">
+                    <p>Nouvelle ordonnance émise</p>
+                    <span class="activity-time">22 Oct 2024</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        }
+
+        <!-- Autres onglets afficheront leur contenu spécifique -->
+        @if (activeTab !== 'dashboard') {
+          <div class="tab-content">
+            <h2>Contenu de {{ getPageTitle() }}</h2>
+            <p>Cette section est en cours de développement. Le contenu spécifique à {{ getPageTitle() }} sera affiché ici.</p>
+            
+            <div class="placeholder-content">
+              <i class="fas fa-cogs"></i>
+              <h3>Fonctionnalité en construction</h3>
+              <p>Nous travaillons dur pour finaliser cette section.</p>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </main>
+</div>
