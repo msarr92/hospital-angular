@@ -1,4 +1,3 @@
-
 <div class="login-page" @loginAnimation>
   <!-- Header simplifié -->
   <header class="login-header">
@@ -20,122 +19,120 @@
 
   <main class="login-main">
     <div class="login-container">
-      <div class="login-card" @formFieldAnimation>
-        <div class="login-header">
-          <div class="login-icon">
-            <i class="fas fa-user-md"></i>
+      <!-- Cadre du formulaire -->
+      <div class="login-frame">
+        <div class="login-card" @formFieldAnimation>
+          <div class="login-header">
+            <h1>Sign in</h1>
+            <p>Enter your credentials to log in</p>
           </div>
-          <h1>Connexion</h1>
-          <p>Accédez à votre espace patient</p>
-        </div>
 
-        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
-          <div class="form-group">
-            <label for="email">Email</label>
-            <div class="input-with-icon">
-              <i class="fas fa-envelope"></i>
-              <input 
-                type="email" 
-                id="email" 
-                formControlName="email"
-                placeholder="votre@email.com"
-                [class.error]="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
-            </div>
-            @if (loginForm.get('email')?.invalid && loginForm.get('email')?.touched) {
-              <div class="error-message">
-                @if (loginForm.get('email')?.errors?.['required']) {
-                  <span>L'email est requis</span>
-                }
-                @if (loginForm.get('email')?.errors?.['email']) {
-                  <span>Email invalide</span>
-                }
+          <!-- Sélecteur de rôle
+          <div class="role-selector">
+            <button class="role-btn active" (click)="selectRole('admin')">Admin</button>
+            <button class="role-btn" (click)="selectRole('doctor')">Doctor</button>
+            <button class="role-btn" (click)="selectRole('patient')">Patient</button>
+          </div> -->
+
+          <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+            <div class="form-group">
+              <label for="username">Username*</label>
+              <div class="input-with-icon">
+                <i class="fas fa-user"></i>
+                <input 
+                  type="text" 
+                  id="username" 
+                  formControlName="username"
+                  placeholder="clinivaAdmin"
+                  [class.error]="loginForm.get('username')?.invalid && loginForm.get('username')?.touched">
               </div>
-            }
-          </div>
+              @if (loginForm.get('username')?.invalid && loginForm.get('username')?.touched) {
+                <div class="error-message">
+                  @if (loginForm.get('username')?.errors?.['required']) {
+                    <span>Username is required</span>
+                  }
+                </div>
+              }
+            </div>
 
-          <div class="form-group">
-            <label for="password">Mot de passe</label>
-            <div class="input-with-icon">
-              <i class="fas fa-lock"></i>
-              <input 
-                [type]="showPassword ? 'text' : 'password'" 
-                id="password" 
-                formControlName="password"
-                placeholder="Votre mot de passe"
-                [class.error]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
-              <button type="button" class="toggle-password" (click)="togglePasswordVisibility()">
-                <i [class]="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+            <div class="form-group">
+              <label for="password">Password*</label>
+              <div class="input-with-icon">
+                <i class="fas fa-lock"></i>
+                <input 
+                  [type]="showPassword ? 'text' : 'password'" 
+                  id="password" 
+                  formControlName="password"
+                  placeholder="Enter your password"
+                  [class.error]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+                <button type="button" class="toggle-password" (click)="togglePasswordVisibility()">
+                  <i [class]="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+                </button>
+              </div>
+              @if (loginForm.get('password')?.invalid && loginForm.get('password')?.touched) {
+                <div class="error-message">
+                  @if (loginForm.get('password')?.errors?.['required']) {
+                    <span>Password is required</span>
+                  }
+                  @if (loginForm.get('password')?.errors?.['minlength']) {
+                    <span>Minimum 6 characters</span>
+                  }
+                </div>
+              }
+            </div>
+
+            <div class="form-options">
+              <label class="checkbox-container">
+                <input type="checkbox" formControlName="rememberMe">
+                <span class="checkmark"></span>
+                Remember me
+              </label>
+              <button type="button" class="link-btn" >
+                Forgot Password?
               </button>
             </div>
-            @if (loginForm.get('password')?.invalid && loginForm.get('password')?.touched) {
-              <div class="error-message">
-                @if (loginForm.get('password')?.errors?.['required']) {
-                  <span>Le mot de passe est requis</span>
-                }
-                @if (loginForm.get('password')?.errors?.['minlength']) {
-                  <span>6 caractères minimum</span>
-                }
-              </div>
-            }
-          </div>
 
-          <div class="form-options">
-            <label class="checkbox-container">
-              <input type="checkbox" formControlName="rememberMe">
-              <span class="checkmark"></span>
-              Se souvenir de moi
-            </label>
-            <button type="button" class="link-btn" (click)="navigateToForgotPassword()">
-              Mot de passe oublié ?
+            <button 
+              type="submit" 
+              class="btn-login-submit"
+              [disabled]="loginForm.invalid || isLoading">
+              @if (isLoading) {
+                <i class="fas fa-spinner fa-spin"></i>
+              }
+              Login
             </button>
+          </form>
+
+          <div class="login-footer">
+            <p>Don't have an account? <button routerLink="/register" type="button" class="link-btn" >Sign up</button></p>
           </div>
-
-          <button 
-            type="submit" 
-            class="btn-login-submit"
-            [disabled]="loginForm.invalid || isLoading">
-            @if (isLoading) {
-              <i class="fas fa-spinner fa-spin"></i>
-            } @else {
-              <i class="fas fa-sign-in-alt"></i>
-            }
-            Se connecter
-          </button>
-        </form>
-
-        <div class="login-divider">
-          <span>Ou</span>
-        </div>
-
-        <div class="social-login">
-          <button class="btn-social google">
-            <i class="fab fa-google"></i>
-            Continuer avec Google
-          </button>
-          <button class="btn-social microsoft">
-            <i class="fab fa-microsoft"></i>
-            Continuer avec Microsoft
-          </button>
-        </div>
-
-        <div class="login-footer">
-          <p>Pas encore de compte ? <button type="button" class="link-btn" (click)="navigateToRegister()">Créer un compte</button></p>
         </div>
       </div>
 
-      <div class="login-hero">
-        <div class="hero-content">
-          <h2>Bienvenue à l'Hôpital Excellence</h2>
-          <p>Accédez à votre espace patient pour :</p>
-          <ul class="features-list">
-            <li><i class="fas fa-check-circle"></i> Prendre rendez-vous en ligne</li>
-            <li><i class="fas fa-check-circle"></i> Consulter vos résultats d'analyses</li>
-            <li><i class="fas fa-check-circle"></i> Communiquer avec votre médecin</li>
-            <li><i class="fas fa-check-circle"></i> Gérer vos ordonnances</li>
-          </ul>
+      <!-- Section illustration médicale -->
+      <div class="medical-illustration-section">
+        <div class="medical-content">
+          <h2>Welcome to Medical Excellence</h2>
+          <p>Your trusted healthcare partner</p>
+          <div class="medical-features">
+            <div class="feature-item">
+              <i class="fas fa-stethoscope"></i>
+              <span>Professional Care</span>
+            </div>
+            <div class="feature-item">
+              <i class="fas fa-clock"></i>
+              <span>24/7 Availability</span>
+            </div>
+            <div class="feature-item">
+              <i class="fas fa-shield-alt"></i>
+              <span>Secure Platform</span>
+            </div>
+          </div>
         </div>
-        <div class="hero-image">
-          <div class="medical-illustration"></div>
+        <div class="medical-image">
+          <div class="doctor-illustration">
+            <i class="fas fa-user-md"></i>
+          </div>
         </div>
       </div>
     </div>

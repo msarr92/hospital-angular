@@ -38,6 +38,9 @@ export class Header {
     this.router.navigate(['/login']);
   }
 
+  navigateToRegister() {
+  this.router.navigate(['/register']);
+}
    
 
 

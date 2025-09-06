@@ -1,0 +1,236 @@
+<div class="login-page" @loginAnimation>
+  <!-- Header simplifié -->
+  <header class="login-header">
+    <nav class="navbar">
+      <div class="nav-brand">
+        <div class="hospital-logo" (click)="navigateToHome()">
+          <i class="fas fa-hospital"></i>
+          <span>Hôpital Excellence</span>
+        </div>
+      </div>
+      <div class="nav-actions">
+        <button class="btn-back" (click)="navigateToHome()">
+          <i class="fas fa-arrow-left"></i>
+          Retour à l'accueil
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main class="login-main">
+    <div class="login-container">
+      <!-- Cadre du formulaire -->
+      <div class="login-frame">
+        <div class="login-card" @formFieldAnimation>
+          <div class="login-header">
+            <h1>Create Account</h1>
+            <p>Create your account to get started</p>
+          </div>
+
+         
+
+          <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="login-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="firstName">First Name*</label>
+                <div class="input-with-icon">
+                  <i class="fas fa-user"></i>
+                  <input 
+                    type="text" 
+                    id="firstName" 
+                    formControlName="firstName"
+                    placeholder="John"
+                    [class.error]="registerForm.get('firstName')?.invalid && registerForm.get('firstName')?.touched">
+                </div>
+                @if (registerForm.get('firstName')?.invalid && registerForm.get('firstName')?.touched) {
+                  <div class="error-message">
+                    @if (registerForm.get('firstName')?.errors?.['required']) {
+                      <span>First name is required</span>
+                    }
+                  </div>
+                }
+              </div>
+
+              <div class="form-group">
+                <label for="lastName">Last Name*</label>
+                <div class="input-with-icon">
+                  <i class="fas fa-user"></i>
+                  <input 
+                    type="text" 
+                    id="lastName" 
+                    formControlName="lastName"
+                    placeholder="Doe"
+                    [class.error]="registerForm.get('lastName')?.invalid && registerForm.get('lastName')?.touched">
+                </div>
+                @if (registerForm.get('lastName')?.invalid && registerForm.get('lastName')?.touched) {
+                  <div class="error-message">
+                    @if (registerForm.get('lastName')?.errors?.['required']) {
+                      <span>Last name is required</span>
+                    }
+                  </div>
+                }
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email*</label>
+              <div class="input-with-icon">
+                <i class="fas fa-envelope"></i>
+                <input 
+                  type="email" 
+                  id="email" 
+                  formControlName="email"
+                  placeholder="john.doe@example.com"
+                  [class.error]="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+              </div>
+              @if (registerForm.get('email')?.invalid && registerForm.get('email')?.touched) {
+                <div class="error-message">
+                  @if (registerForm.get('email')?.errors?.['required']) {
+                    <span>Email is required</span>
+                  }
+                  @if (registerForm.get('email')?.errors?.['email']) {
+                    <span>Invalid email format</span>
+                  }
+                </div>
+              }
+            </div>
+
+            <div class="form-group">
+              <label for="phone">Phone Number</label>
+              <div class="input-with-icon">
+                <i class="fas fa-phone"></i>
+                <input 
+                  type="tel" 
+                  id="phone" 
+                  formControlName="phone"
+                  placeholder="+1 234 567 8900"
+                  [class.error]="registerForm.get('phone')?.invalid && registerForm.get('phone')?.touched">
+              </div>
+              @if (registerForm.get('phone')?.invalid && registerForm.get('phone')?.touched) {
+                <div class="error-message">
+                  @if (registerForm.get('phone')?.errors?.['pattern']) {
+                    <span>Invalid phone number</span>
+                  }
+                </div>
+              }
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="password">Password*</label>
+                <div class="input-with-icon">
+                  <i class="fas fa-lock"></i>
+                  <input 
+                    [type]="showPassword ? 'text' : 'password'" 
+                    id="password" 
+                    formControlName="password"
+                    placeholder="Create password"
+                    [class.error]="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
+                  <button type="button" class="toggle-password" (click)="togglePasswordVisibility()">
+                    <i [class]="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+                  </button>
+                </div>
+                @if (registerForm.get('password')?.invalid && registerForm.get('password')?.touched) {
+                  <div class="error-message">
+                    @if (registerForm.get('password')?.errors?.['required']) {
+                      <span>Password is required</span>
+                    }
+                    @if (registerForm.get('password')?.errors?.['minlength']) {
+                      <span>Minimum 8 characters</span>
+                    }
+                  </div>
+                }
+              </div>
+
+              <div class="form-group">
+                <label for="confirmPassword">Confirm Password*</label>
+                <div class="input-with-icon">
+                  <i class="fas fa-lock"></i>
+                  <input 
+                    type="password" 
+                    id="confirmPassword" 
+                    formControlName="confirmPassword"
+                    placeholder="Confirm password"
+                    [class.error]="registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched">
+                </div>
+                @if (registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched) {
+                  <div class="error-message">
+                    @if (registerForm.get('confirmPassword')?.errors?.['required']) {
+                      <span>Please confirm your password</span>
+                    }
+                  </div>
+                }
+                @if (registerForm.hasError('passwordsMismatch') && registerForm.get('confirmPassword')?.touched) {
+                  <div class="error-message">
+                    <span>Passwords do not match</span>
+                  </div>
+                }
+              </div>
+            </div>
+
+
+            <button 
+              type="submit" 
+              class="btn-login-submit"
+              [disabled]="registerForm.invalid || isLoading">
+              @if (isLoading) {
+                <i class="fas fa-spinner fa-spin"></i>
+              }
+              Create Account
+            </button>
+          </form>
+
+          <div class="login-divider">
+            <span>Or</span>
+          </div>
+
+          <div class="social-login">
+            <button class="btn-social google">
+              <i class="fab fa-google"></i>
+              Sign up with Google
+            </button>
+            <button class="btn-social microsoft">
+              <i class="fab fa-microsoft"></i>
+              Sign up with Microsoft
+            </button>
+          </div>
+
+          <div class="login-footer">
+            <p>Already have an account? <button type="button" class="link-btn" (click)="navigateToLogin()">Sign in</button></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section illustration médicale -->
+      <div class="medical-illustration-section">
+        <div class="medical-content">
+          <h2>Join Our Medical Community</h2>
+          <p>Become part of our healthcare family</p>
+          <div class="medical-features">
+            <div class="feature-item">
+              <i class="fas fa-calendar-check"></i>
+              <span>Easy Appointments</span>
+            </div>
+            <div class="feature-item">
+              <i class="fas fa-file-medical"></i>
+              <span>Digital Health Records</span>
+            </div>
+            <div class="feature-item">
+              <i class="fas fa-comments"></i>
+              <span>Direct Doctor Communication</span>
+            </div>
+            <div class="feature-item">
+              <i class="fas fa-bell"></i>
+              <span>Appointment Reminders</span>
+            </div>
+          </div>
+        </div>
+        <div class="medical-image">
+          <div class="doctor-illustration">
+            <i class="fas fa-heartbeat"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
